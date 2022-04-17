@@ -1,5 +1,5 @@
 import {BaseDomainEntity} from "types-ddd";
-import {ShoppingCartItemValueObject} from "../value-objects/ShoppingCartItem";
+import {ShoppingCartItemValueObject} from "../value-objects/shopping-cart-item.value";
 
 export class ShoppingCartEntity extends BaseDomainEntity {
     private items: ShoppingCartItemValueObject[] = [];

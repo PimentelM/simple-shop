@@ -1,6 +1,6 @@
 import {BaseDomainEntity, DomainId} from "types-ddd";
 import ValueObject from "types-ddd/dist/core/value-object";
-import {ShoppingCartEntity} from "./ShoppingCart";
+import {ShoppingCartEntity} from "./shopping-cart.entity";
 
 export class CustomerEntity extends BaseDomainEntity{
     username: string;

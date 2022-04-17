@@ -1,4 +1,4 @@
-import {ProductEntity} from "./Product";
+import {ProductEntity} from "./product.entity";
 
 export class OrderItemEntity {
     product: ProductEntity;

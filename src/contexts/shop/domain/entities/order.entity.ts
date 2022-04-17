@@ -1,6 +1,6 @@
 import {BaseDomainEntity, DomainId, OrderStatusValueObject} from "types-ddd";
-import {CustomerEntity} from "./Customer";
-import {OrderItemEntity} from "./OrderItem";
+import {CustomerEntity} from "./customer.entity";
+import {OrderItemEntity} from "./order-item.entity";
 
 
 export class OrderEntity extends BaseDomainEntity {
