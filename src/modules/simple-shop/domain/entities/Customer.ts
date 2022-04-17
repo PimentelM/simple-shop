@@ -1,6 +1,6 @@
 import {BaseDomainEntity} from "types-ddd";
 
-class CustomerEntity extends BaseDomainEntity{
+export class CustomerEntity extends BaseDomainEntity{
     username: string;
     firstName: string;
     lastName: string;
