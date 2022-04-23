@@ -1,3 +1,3 @@
-import {init} from "./shop/app.server";
+import {init} from "./shop/app/app.server";
 
 init()
