@@ -1,4 +1,4 @@
-import {validate, ValidationError} from "class-validator";
+import {validateSync} from "class-validator";
 import {ValidatorOptions} from "class-validator/types/validation/ValidatorOptions";
 
 let defaultClassValidatorOptions = {
@@ -7,11 +7,13 @@ let defaultClassValidatorOptions = {
     stopAtFirstError: true,
 };
 
-export const validateSchema = async (obj,validationClass, options? : Partial<ValidatorOptions>): Promise<ValidationError[]> => {
-    let errors = await validate(obj, validationClass, {
+export const validateOrThrow = (obj, validationClass, options? : Partial<ValidatorOptions>): void => {
+    let errors =  validateSync(obj, validationClass, {
         ...defaultClassValidatorOptions,
         ...options,
     });
 
-    return errors;
+    if(errors.length > 0) {
+        throw new Error(errors.map(e => e.constraints).join(', '));
+    }
 }

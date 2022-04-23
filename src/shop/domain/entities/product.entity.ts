@@ -1,6 +1,6 @@
 import {BaseEntity} from "./base.entity";
 import {ArrayNotEmpty, IsMongoId, IsPositive, IsString, MaxLength, MinLength, validate} from "class-validator";
-import {validateSchema} from "../../../utils/schemaValidator";
+import {validateOrThrow} from "../../../utils/schemaValidator";
 import {ObjectId} from "mongodb";
 
 export class Product extends BaseEntity {
@@ -17,10 +17,8 @@ export class Product extends BaseEntity {
 
 
     public static CreateNew(params : CreateProductParams) {
-
         // Validate input
-        let errors = validateSchema(params, CreateProductParams);
-
+        validateOrThrow(params, CreateProductParams);
 
         const product = new Product();
         product.name = params.name;
@@ -30,10 +28,6 @@ export class Product extends BaseEntity {
         product.tags = params.tags;
         product.stockQuantity = params.stockQuantity;
         product.stockReserved = 0;
-
-        product.createdAt = new Date();
-        product.updatedAt = new Date();
-        product.id = new ObjectId().toHexString();
 
         return product;
     }
