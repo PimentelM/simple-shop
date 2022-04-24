@@ -1,28 +1,49 @@
 import {ObjectId} from "mongodb";
 
-export class BaseEntity {
-  private _id: ObjectId | string = new ObjectId();
-  public readonly createdAt: Date = new Date();
-  public readonly updatedAt: Date = new Date();
-  public readonly deletedAt: Date;
+type BaseState = {_id: ObjectId | string, createdAt: Date, updatedAt: Date, deletedAt?: Date};
 
-  public get isDeleted(): boolean {
-    return this.deletedAt !== undefined;
+export class BaseEntity<EntityState = any> {
+  private state : EntityState & BaseState;
+
+  constructor(entityState?: EntityState & Partial<BaseState>) {
+    this.state = {
+      _id: new ObjectId(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      deletedAt: null,
+      ...entityState
+    }
   }
 
   public get id(): string {
-    if(typeof this._id === 'string') {
-      return this._id;
+    if(typeof this.state._id === 'string') {
+      return this.state._id;
     }
-    return this._id.toHexString();
+    return this.state._id.toHexString();
+  }
+
+  public get createdAt() : Date{
+    return this.state.createdAt;
+  }
+
+  public get updatedAt() : Date {
+    return this.state.updatedAt;
+  }
+
+  public get deletedAt(): Date | null {
+    return this.state.deletedAt;
+  }
+
+  public get isDeleted(): boolean {
+    return this.state.deletedAt !== undefined;
   }
 
   public updateTimestamp(): void {
-    (this as any).updatedAt = new Date();
+    this.state.updatedAt = new Date();
   }
 
   public markAsDeleted(): void {
-    (this as any).deletedAt = new Date();
+    this.state.deletedAt = new Date();
   }
 
 
