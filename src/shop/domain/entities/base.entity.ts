@@ -3,7 +3,7 @@ import {ObjectId} from "mongodb";
 type BaseState = {_id: ObjectId | string, createdAt: Date, updatedAt: Date, deletedAt?: Date};
 
 export class BaseEntity<EntityState = any> {
-  private state : EntityState & BaseState;
+  protected state : EntityState & BaseState;
 
   constructor(entityState?: EntityState & Partial<BaseState>) {
     this.state = {

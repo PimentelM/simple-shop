@@ -3,7 +3,8 @@ import {ArrayNotEmpty, IsMongoId, IsPositive, IsString, MaxLength, MinLength, va
 import {validateOrThrow} from "../../../utils/schemaValidator";
 import {ObjectId} from "mongodb";
 
-export class Product extends BaseEntity {
+
+type ProductState = {
     name: string;
     description: string;
 
@@ -13,48 +14,43 @@ export class Product extends BaseEntity {
 
     stockQuantity: number;
     stockReserved: number;
-
-
-
-    public static CreateNew(params : CreateProductParams) {
-        // Validate input
-        validateOrThrow(params, CreateProductParams);
-
-        const product = new Product();
-        product.name = params.name;
-        product.description = params.description;
-        product.price = params.price;
-        product.images = params.images;
-        product.tags = params.tags;
-        product.stockQuantity = params.stockQuantity;
-        product.stockReserved = 0;
-
-        return product;
-    }
 }
 
 
+export class Product extends BaseEntity<ProductState> {
 
-export class CreateProductParams {
-    @IsString()
-    @MinLength(2)
-    name: string;
+    public get name(): string {
+        return this.state.name;
+    }
 
-    @MinLength(1)
-    @MaxLength(1024)
-    @IsString()
-    description: string;
+    public get description(): string {
+        return this.state.description;
+    }
 
-    @IsPositive()
-    price: number;
+    public get price(): number {
+        return this.state.price;
+    }
 
-    @IsMongoId({each: true})
-    @ArrayNotEmpty()
-    images: string[];
+    public get images(): string[] {
+        return this.state.images;
+    }
 
-    @IsString()
-    tags: string[];
+    public get tags(): string[] {
+        return this.state.tags;
+    }
 
-    @IsPositive()
-    stockQuantity: number;
+    public get stockQuantity(): number {
+        return this.state.stockQuantity;
+    }
+
+    public get stockReserved(): number {
+        return this.state.stockReserved;
+    }
+
+
+    constructor(state: ProductState) {
+        super(state);
+    }
+
+
 }
