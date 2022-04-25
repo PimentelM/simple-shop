@@ -1,7 +1,5 @@
 import {BaseEntity} from "./base.entity";
-import {ArrayNotEmpty, IsMongoId, IsPositive, IsString, MaxLength, MinLength, validate} from "class-validator";
-import {validateOrThrow} from "../../../utils/schemaValidator";
-import {ObjectId} from "mongodb";
+import {clone} from "lodash";
 
 
 type ProductState = {
@@ -31,12 +29,12 @@ export class Product extends BaseEntity<ProductState> {
         return this.state.price;
     }
 
-    public get images(): string[] {
-        return this.state.images;
+    public get images(): ReadonlyArray<string> {
+        return clone(this.state.images);
     }
 
-    public get tags(): string[] {
-        return this.state.tags;
+    public get tags(): ReadonlyArray<string> {
+        return clone(this.state.tags);
     }
 
     public get stockQuantity(): number {

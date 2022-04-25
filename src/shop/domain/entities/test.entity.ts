@@ -1,11 +1,16 @@
 import {BaseEntity} from "./base.entity";
+import {clone} from "lodash";
 
-export class Test extends BaseEntity<{field : string}> {
+export class Test extends BaseEntity<TestState> {
     get field() {
         return this.state.field;
     }
 
-    constructor(state : {field : string} = {field : 'yes'}) {
+    get list(): ReadonlyArray<number> {
+        return clone(this.state.list)
+    }
+
+    constructor(state : TestState = {field : 'yes', list: [1,2]}) {
         super(state);
     }
 
@@ -18,6 +23,8 @@ export class Test extends BaseEntity<{field : string}> {
 }
 
 
+
+type TestState = {field : string, list: number[]};
 
 
 

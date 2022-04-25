@@ -32,4 +32,19 @@ describe("TestEntity", () => {
   });
 
 
+  it("should not be possible to mutate list from entity", () => {
+    const testEntity = new Test({
+      list: [1, 2],
+      field: "test"
+    });
+
+    // @ts-ignore
+    testEntity.list.push(3);
+
+    expect(testEntity.list).toEqual([1, 2]);
+    
+  });
+
+
+
 });
