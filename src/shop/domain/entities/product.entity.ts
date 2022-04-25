@@ -45,10 +45,4 @@ export class Product extends BaseEntity<ProductState> {
         return this.state.stockReserved;
     }
 
-
-    constructor(state: ProductState) {
-        super(state);
-    }
-
-
 }

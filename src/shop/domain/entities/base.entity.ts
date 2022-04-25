@@ -1,11 +1,12 @@
 import {ObjectId} from "mongodb";
+import {DeepReadonly} from "ts-essentials";
 
 type BaseState = {_id: ObjectId | string, createdAt: Date, updatedAt: Date, deletedAt: Date};
 
 export abstract class BaseEntity<EntityState = any> {
   protected state : EntityState & BaseState;
 
-  protected constructor(entityState?: EntityState & Partial<BaseState>) {
+  constructor(entityState?: EntityState & Partial<BaseState>) {
     this.state = {
       _id: new ObjectId(),
       createdAt: new Date(),
@@ -50,7 +51,7 @@ export abstract class BaseEntity<EntityState = any> {
     throw new Error('.toString() method is not implemented.');
   }
 
-  public toJSON(){
+  public toJSON() : DeepReadonly<EntityState & BaseState>{
     // Safer than cloneDeep but a bit slower.
     // Avoids returning state reference directly so it can't be mutated outside of the entity.
     return JSON.parse(JSON.stringify(this.state));
