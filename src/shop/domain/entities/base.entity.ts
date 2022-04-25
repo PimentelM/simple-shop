@@ -52,6 +52,7 @@ export abstract class BaseEntity<EntityState = any> {
 
   public toJSON(){
     // Safer than cloneDeep but a bit slower.
+    // Avoids returning state reference directly so it can't be mutated outside of the entity.
     return JSON.parse(JSON.stringify(this.state));
   }
 
