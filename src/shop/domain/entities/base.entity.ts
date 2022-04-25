@@ -1,11 +1,11 @@
 import {ObjectId} from "mongodb";
 
-type BaseState = {_id: ObjectId | string, createdAt: Date, updatedAt: Date, deletedAt?: Date};
+type BaseState = {_id: ObjectId | string, createdAt: Date, updatedAt: Date, deletedAt: Date};
 
-export class BaseEntity<EntityState = any> {
+export abstract class BaseEntity<EntityState = any> {
   protected state : EntityState & BaseState;
 
-  constructor(entityState?: EntityState & Partial<BaseState>) {
+  protected constructor(entityState?: EntityState & Partial<BaseState>) {
     this.state = {
       _id: new ObjectId(),
       createdAt: new Date(),
@@ -35,7 +35,7 @@ export class BaseEntity<EntityState = any> {
   }
 
   public get isDeleted(): boolean {
-    return this.state.deletedAt !== undefined;
+    return this.state.deletedAt instanceof Date;
   }
 
   public updateTimestamp(): void {
@@ -44,6 +44,15 @@ export class BaseEntity<EntityState = any> {
 
   public markAsDeleted(): void {
     this.state.deletedAt = new Date();
+  }
+
+  public toString(){
+    throw new Error('.toString() method is not implemented.');
+  }
+
+  public toJSON(){
+    // Safer than cloneDeep but a bit slower.
+    return JSON.parse(JSON.stringify(this.state));
   }
 
 

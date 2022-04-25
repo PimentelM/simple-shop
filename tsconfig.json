@@ -9,7 +9,7 @@
     "lib": [
       "ES2020"
     ] /* Specify library files to be included in the compilation. */,
-    "types": ["@types/jest", "@types/node"] /* Specify type declaration files to be included in the compilation. */,
+    "types": ["@types/jest", "@types/node", "@types/lodash"] /* Specify type declaration files to be included in the compilation. */,
     "rootDir": "./src" /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */,
     "outDir": "./dist" /* Redirect output structure to the directory. */,
     "declarationDir": "./dist/@types",
@@ -20,6 +20,7 @@
     "noImplicitAny": false /* Warn on expressions and declarations with an implied 'any' type. */,
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
     "noImplicitThis": false /* Raise error on 'this' expressions with an implied 'any' type. */,
+    "moduleResolution": "node"
   },
   "include": ["./src"],
   "exclude": ["node_modules", "dist"]
